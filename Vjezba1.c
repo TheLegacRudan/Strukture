@@ -15,7 +15,7 @@ int main() {
 	stud *osoba;
 	FILE* f;
 	char a;
-	char manistra[100];
+	
 	int br=1;	//zato sta EOF zavrsava nakon zadnjeg broja a ne u novom redu tako da zadnji red nema \n na kraju
 	float rel;
 	int i;
