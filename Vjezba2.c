@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
 
 typedef struct osoba *pos;
 typedef struct osoba {
@@ -14,8 +15,8 @@ int unosP(int x,char imeU[],char prezimeU[], pos P) {
 	q = (pos)malloc(sizeof(os));
 	
 	q->god = x;
-	strcpy_s(q->ime,sizeof(q->ime), imeU);
-	strcpy_s(q->prezime, sizeof(q->prezime), prezimeU);
+	strcpy(q->ime, imeU);
+	strcpy(q->prezime, prezimeU);
 
 	q->next = P->next;
 	P->next = q;
@@ -28,8 +29,8 @@ int unosK(int x, char imeU[], char prezimeU[], pos P) {
 	q = (pos)malloc(sizeof(os));
 
 	q->god = x;
-	strcpy_s(q->ime, sizeof(q->ime), imeU);
-	strcpy_s(q->prezime, sizeof(q->prezime), prezimeU);
+	strcpy(q->ime, imeU);
+	strcpy(q->prezime, prezimeU);
 
 	while (P->next != NULL) {
 		P = P->next;
@@ -57,7 +58,12 @@ int trazi(char prezimeU[], pos P) {
 	
 	while (strcmp(prezimeU,P->prezime)!=0) {
 		P = P->next;
+		if(P==NULL){
+		    printf("\nNema trazenog prezimena u listi - za trazenje(-1)\n\n");
+		    return -1;
+		    }
 	}
+	
 	printf("\n\n\nTRAZENA OSOBA JE:\n");
 	printf("%s ", P->ime);
 	printf("%s ", P->prezime);
@@ -73,7 +79,13 @@ int brisi(char prezimeU[], pos P) {
 	while (strcmp(prezimeU, P->prezime) != 0) {
 		q = P;
 		P = P->next;
+		if(P==NULL){
+		    printf("\nNema trazenog prezimena u listi - za brisanje(-1)\n\n");
+		    return -1;
+		    }
 		}
+
+
 
 	q->next = P->next;
 	free(P);
@@ -127,13 +139,9 @@ int main() {
 		unosK(god_main, ime_main, prezime_main, &head);
 	}
 
-			
-		//nisam napravio opcije za pokretanje ovih funkcija u konzoli jer
-		//nije pisalo u zadatku, ali sve funckije rade pa je ovdje primjer brisanja
-		//i trazenja po prezimenu
 	ispis(head.next);
 	trazi("Ujevic", &head);
-	brisi("Ujevic", &head);
+	brisi("Hektorovic", &head);
 	printf("Ispis nakon izbrisane osobe\n\n");
 	ispis(head.next);
 
