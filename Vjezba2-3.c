@@ -85,16 +85,61 @@ int brisi(char prezimeU[], pos P) {
 		    }
 		}
 
-
-
 	q->next = P->next;
 	free(P);
 
-
 	return 0;
 }
+//prezime iza kojeg el zelimo dodat, sastavnice novog el (ime,god,prez), pos head
+int dod_eiz(char elem[], int x, char imeU[], char prezimeU[], pos P) {
 
+    pos q;
+    q = (pos)malloc(sizeof(os));
 
+    q->god = x;
+    strcpy(q->ime, imeU);
+    strcpy(q->prezime,prezimeU);
+        
+    while (strcmp(P->prezime, elem) != 0) {
+        P = P->next;
+        if(P==NULL){
+            printf("\nNema trazenog prezimena u listi - za dodavanje iza(-1)\n\n");
+		    return -1;
+            }
+    }
+
+    q->next = P->next;
+    P->next = q;
+             
+    return 0;
+}
+
+int dod_eis(char elem[], int x, char imeU[], char prezimeU[], pos P) {
+
+    pos q,r;
+    q = (pos)malloc(sizeof(os));
+    r= (pos)malloc(sizeof(os));
+
+    q->god = x;
+    strcpy(q->ime, imeU);
+    strcpy(q->prezime, prezimeU);
+
+    while (P != NULL) {
+        if (strcmp(P->next->prezime, elem) == 0)
+            break;
+
+        P = P->next;
+         if(P->next==NULL){
+            printf("\nNema trazenog prezimena u listi - za dodavanje ispred(-1)\n\n");
+		    return -1;
+            }
+    }
+
+    q->next = P->next;
+    P->next = q;
+
+    return 0;
+}
 
 int main() {
 
@@ -113,8 +158,6 @@ int main() {
 	unosP(1487, "Petar", "Hektorovic", &head);
 	unosK(1930, "Ivan", "Slamnig", &head);
 	
-
-
 	printf("Koliko osoba zelite dodati na pocetak?: ");
 	scanf("%d", &br);
 
@@ -144,8 +187,12 @@ int main() {
 	brisi("Hektorovic", &head);
 	printf("Ispis nakon izbrisane osobe\n\n");
 	ispis(head.next);
-
-
+	dod_eiz("Slamnig", 1745, "Dodan", "Iza", &head);
+    printf("\n\nIspis nakon dodane osobe iza odredjenog elementa \n\n");
+    ispis(head.next);
+    printf("\n\nIspis nakon dodane osobe ispred odredjenog elementa \n\n");
+    dod_eis("Slamnig", 1000, "Dodan", "Ispred",&head);
+    ispis(head.next);
 
 	return 0;
 }
