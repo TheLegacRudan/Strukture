@@ -141,6 +141,31 @@ int dod_eis(char elem[], int x, char imeU[], char prezimeU[], pos P) {
     return 0;
 }
 
+//bubble
+int sortPrez(pos P) {
+	pos q, pr, kraj, temp;
+	kraj = NULL;
+	while (P->next != kraj) {
+		pr = P;
+		q = P->next;
+		while (q->next != kraj) {
+			if (strcmp(q->prezime, q->next->prezime) > 0) {
+				temp = q->next;
+				pr->next = temp;
+				q->next = temp->next;
+				temp->next = q;
+
+				q = temp;
+			}
+			pr = q;
+			q = q->next;
+		}
+		kraj = q;
+	}
+
+	return 0;
+}
+
 int main() {
 
 	os head;
@@ -188,11 +213,15 @@ int main() {
 	printf("Ispis nakon izbrisane osobe\n\n");
 	ispis(head.next);
 	dod_eiz("Slamnig", 1745, "Dodan", "Iza", &head);
-    printf("\n\nIspis nakon dodane osobe iza odredjenog elementa \n\n");
-    ispis(head.next);
-    printf("\n\nIspis nakon dodane osobe ispred odredjenog elementa \n\n");
-    dod_eis("Slamnig", 1000, "Dodan", "Ispred",&head);
-    ispis(head.next);
+    	printf("\n\nIspis nakon dodane osobe iza odredjenog elementa \n\n");
+    	ispis(head.next);
+    	printf("\n\nIspis nakon dodane osobe ispred odredjenog elementa \n\n");
+    	dod_eis("Slamnig", 1000, "Dodan", "Ispred",&head);
+    	ispis(head.next);
+	
+	sortPrez(&head);
+	printf("\n\nIspis nakon sortiranja\n\n");
+	ispis(head.next);
 
 	return 0;
 }
