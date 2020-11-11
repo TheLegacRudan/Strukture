@@ -166,6 +166,36 @@ int sortPrez(pos P) {
 	return 0;
 }
 
+int citDat(FILE* f,pos P) {
+	//eof je zadnji(a ne \n)pa je br=1
+	int br=1;
+	char a;
+	int i;
+	int godP;
+	char imeU[20];
+	char prezU[30];
+	
+	while ((a = fgetc(f)) != EOF) {
+		if (a == '\n')
+			br++;
+		}
+	rewind(f); //vracanje na pocetak Filea
+	for (i = 0; i < br; i++) {
+		fscanf(f,"%s %s %d", imeU, prezU, &godP);
+		unosP(godP, imeU, prezU, P);
+		}
+
+	return 0;
+}
+//head->next saljemo
+int pisDat(FILE* p, pos P) {
+	while (P!= NULL) {
+		fprintf(p, "%s %s %d \n", P->ime, P->prezime, P->god);
+		P = P->next;
+	}
+	return 0;
+}
+
 int main() {
 
 	os head;
@@ -176,6 +206,12 @@ int main() {
 	int god_main=0;
 	char ime_main[20];
 	char prezime_main[30];
+	
+	FILE* f;
+	FILE* p;
+
+	f = fopen("zdk3.txt", "r");
+	p = fopen("zdk3unos.txt", "w");
 
 	//pocetna lista prije dodavanja
 	unosP(1450, "Marko", "Marulic", &head);
@@ -213,15 +249,23 @@ int main() {
 	printf("Ispis nakon izbrisane osobe\n\n");
 	ispis(head.next);
 	dod_eiz("Slamnig", 1745, "Dodan", "Iza", &head);
-    	printf("\n\nIspis nakon dodane osobe iza odredjenog elementa \n\n");
-    	ispis(head.next);
-    	printf("\n\nIspis nakon dodane osobe ispred odredjenog elementa \n\n");
-    	dod_eis("Slamnig", 1000, "Dodan", "Ispred",&head);
-    	ispis(head.next);
+    printf("\n\nIspis nakon dodane osobe iza odredjenog elementa \n\n");
+   	ispis(head.next);
+   	printf("\n\nIspis nakon dodane osobe ispred odredjenog elementa \n\n");
+   	dod_eis("Slamnig", 1000, "Dodan", "Ispred",&head);
+   	ispis(head.next);
+	
+	printf("\n\nIspis nakon unosa iz datoteke\n\n");
+	citDat(f, &head);
+	ispis(head.next);
+	fclose(f);
 	
 	sortPrez(&head);
 	printf("\n\nIspis nakon sortiranja\n\n");
 	ispis(head.next);
+	
+	pisDat(p, head.next);
+	fclose(p);
 
 	return 0;
 }
