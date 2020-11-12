@@ -1,0 +1,94 @@
+#include <stdio.h>
+
+typedef struct lista *poz;
+
+typedef struct lista {
+	int a;
+	poz next;
+}ls;
+
+int unosK(poz p, int x) {
+		poz q;
+		q = (poz)malloc(sizeof(ls));
+
+		q->a = x;
+
+		while (p->next != NULL) {
+			p = p->next;
+		}
+
+		p->next = q;
+		q->next = NULL;
+		return 0;
+	}
+poz presjek(poz p,poz q) {
+	ls rez;
+	rez.next = NULL;
+	poz r;
+	r = &rez;
+
+
+	while (p->next!=NULL&&q->next!=NULL) {
+		
+
+		if (p->next->a == q->next->a) {
+			unosK(&rez, p->a);
+			p = p->next;
+			q = q->next;
+			
+		}
+		else if (p->next->a > q->next->a) {
+			q = q->next;
+			
+		}
+		else {
+			p = p->next;
+		
+		}
+	}
+	
+	return r;
+}
+int ispis(poz P) {
+	
+	while (P->next != NULL) {
+		printf("%d ", P->next->a);
+
+		P->next = P->next->next;
+	}
+	return 0;
+}
+
+
+int main() {
+	ls l1;
+	ls l2;
+	l1.next = NULL;
+	l2.next = NULL;
+	poz bla;
+	bla = (poz)malloc(sizeof(ls));
+
+	unosK(&l1,1);
+	unosK(&l1,3);
+	unosK(&l1,4);
+	unosK(&l1,5);
+
+	unosK(&l2,2);
+	unosK(&l2,4);
+	unosK(&l2,5);
+	unosK(&l2,7);
+	unosK(&l2,9);
+
+	bla = presjek(&l1, &l2);
+
+	printf("AAAAAAAAAAAAAAAAAA     aaa %d aaa %d aaa",bla->next->a, bla->next->next->a);
+	//presjek
+	ispis(&l1);
+	printf("\n\n");
+	ispis(&l2);
+	printf("\n\n");
+	ispis(presjek(&l1, &l2));
+	
+
+	return 0;
+	}
