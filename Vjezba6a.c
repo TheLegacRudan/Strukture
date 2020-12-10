@@ -10,7 +10,8 @@ typedef struct stog {
 int push(int x,poz head){
 	poz q;
 	q = (poz)malloc(sizeof(st));
-
+	q->x=x;
+	
 	q->next = head->next;
 	head->next = q;
 }
