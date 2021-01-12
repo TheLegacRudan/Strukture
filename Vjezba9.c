@@ -12,12 +12,10 @@ typedef struct node {
 pos insert(pos current, pos el) {
 	if (NULL == current)
 		return el;
-	if (current->num > el->num) {
-		current->left = insert(current->left, el);
-	}
-	else if (current->num < el->num) {
+	if (current->num > el->num)
+		current->left = insert(current->left, el);	
+	else if (current->num < el->num)
 		current->right = insert(current->right, el);
-	}
 	else{
 		printf("error nepotrebno");
 		free(el);
@@ -41,14 +39,14 @@ pos find(pos cur, int num) {
 		return cur;
 	else if (cur->num > num)
 		return find(cur->left, num);
-	//else if {
-	//} //obrnuto
+	else if (cur->num < num)
+		return find(cur->left, num);
 }
 
 pos del(pos cur, int num) {
-	if (NULL == cur) {
+	if (NULL == cur)
 		return NULL;
-	}
+
 	if (cur->num == num) {
 		if (cur->left != NULL) {
 			pos result = findMax(cur->left);
@@ -65,35 +63,29 @@ pos del(pos cur, int num) {
 			return NULL;
 		}
 	}
-	else if (cur->num > num) {
-		cur->left = delete(cur->left, num);
-	}
-	else if (cur->num < num) {
+	else if (cur->num > num)
+		cur->left = delete(cur->left, num);	
+	else if (cur->num < num)
 		cur->right = delete(cur->right, num);
-	}
 	return cur;
 }
 
 pos findMax(pos cur) {
 	if (NULL == cur)
 		return NULL;
-	while (cur->right != NULL) {
+	while (cur->right != NULL)
 		cur = cur->right;
-	}
 	return cur;
 }
 pos findMin(pos cur) {
 	if (NULL == cur)
 		return NULL;
-	while (cur->left != NULL) {
+	while (cur->left != NULL)
 		cur = cur->left;
-	}
 	return cur;
 }
 
 int main() {
 	pos root = NULL;
-
-
 	return 0;
 }
