@@ -94,10 +94,15 @@ proot fun(char stringU[]) {
 int print(proot cur,FILE*fp2) {
 	if (NULL == cur)
 		return -1;
+	if (cur->lt != NULL && cur->rt != NULL)
+		fprintf(fp2,"(");
 	
 	print(cur->rt,fp2);
 	fprintf(fp2,"%c ", cur->a);
 	print(cur->lt,fp2);
+	
+	if (cur->lt != NULL && cur->rt != NULL)
+		fprintf(fp2,"(");
 
 	return 0;
 }
@@ -113,7 +118,6 @@ int main() {
 
 	//unos cijelog stringa u memoriju
 	fscanf(fp,"%[^EOF]", string);
-	//nisam print sa zagradama napravio :/
 	print(fun(string),fp2);
 
 	fclose(fp);
